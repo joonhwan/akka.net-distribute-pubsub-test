@@ -49,6 +49,13 @@ namespace DistributePubSubExample.JobRequester
         {
             switch (message)
             {
+                case ClusterEvent.MemberJoined j:
+                    ProcessMemberAdd(j.Member);
+                    if (_upMembers.Count > 0)
+                    {
+                        BecomeJobHandlerAvailableState();
+                    }
+                    break;
                 case ClusterEvent.MemberUp e:
                     ProcessMemberAdd(e.Member);
                     if (_upMembers.Count > 0)
